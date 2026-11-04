@@ -429,14 +429,22 @@
 												"folder": {
 													"value": "@activity('Read Table Details').output.firstRow.source_path",
 													"type": "Expression"
-												}
+												},
+												"container": "source"
 											}
 										}
 									],
 									"outputs": [
 										{
 											"referenceName": "DS_Csv_Binary",
-											"type": "DatasetReference"
+											"type": "DatasetReference",
+											"parameters": {
+												"folder": {
+													"value": "@concat(\n    activity('Read Table Details').output.firstRow.source_system,\n    '/',\n    activity('Read Table Details').output.firstRow.source_table_name,\n    '/',\n    variables('start_time')\n)",
+													"type": "Expression"
+												},
+												"container": "landing"
+											}
 										}
 									]
 								}
