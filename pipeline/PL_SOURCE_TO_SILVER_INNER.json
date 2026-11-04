@@ -285,7 +285,8 @@
 								"dataset": {
 									"referenceName": "AzureSqlTable1",
 									"type": "DatasetReference"
-								}
+								},
+								"firstRowOnly": true
 							}
 						},
 						{
@@ -307,7 +308,7 @@
 							"typeProperties": {
 								"variableName": "watermark_value",
 								"value": {
-									"value": "@if(contains(activity('Read watermark').output, 'firstRow'), activity('Read watermark').output.firstRow.watermark_value, '1900-01-01')\n",
+									"value": "@activity('Read watermark').output.firstRow.watermark_value\n",
 									"type": "Expression"
 								}
 							}
