@@ -276,7 +276,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "@concat('select watermark_value from ctrl.watermark where table_id = ''', pipeline().parameters.table_id, '''')",
+										"value": "@concat('select watermark_value from ctrl.watermark where table_id = ''', pipeline().parameters.table_id, '''')\n",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -307,7 +307,7 @@
 							"typeProperties": {
 								"variableName": "watermark_value",
 								"value": {
-									"value": "@activity('Read Watermark').output.firstRow.watermark_value",
+									"value": "@if(contains(activity('Read watermark').output, 'firstRow'), activity('Read watermark').output.firstRow.watermark_value, '1900-01-01')\n",
 									"type": "Expression"
 								}
 							}
