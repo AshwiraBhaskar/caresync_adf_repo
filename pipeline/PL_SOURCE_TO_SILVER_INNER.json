@@ -245,7 +245,7 @@
 							"typeProperties": {
 								"variableName": "watermark_value",
 								"value": {
-									"value": "\"@activity('Read watermark').output.firstRow.watermark_value\"\n",
+									"value": "@activity('Read Watermark').output.firstRow.watermark_value\n",
 									"type": "Expression"
 								}
 							}
@@ -408,7 +408,7 @@
 												"type": "AzureBlobFSReadSettings",
 												"recursive": false,
 												"modifiedDatetimeStart": {
-													"value": "@formatDateTime(variables('watermark_value'), 'yyyy-MM-ddTHH:mm:ssZ')\n",
+													"value": "@variables('watermark_value')",
 													"type": "Expression"
 												},
 												"deleteFilesAfterCompletion": false
