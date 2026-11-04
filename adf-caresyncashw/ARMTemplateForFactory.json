@@ -123,7 +123,7 @@
 							"source": {
 								"type": "PostgreSqlV2Source",
 								"query": {
-									"value": "select * from PUBLIC.@{activity('Read Table Details').output.firstRow.source_table_name}\n\n@{\n    if(equals(activity('Read Table Details').output.firstRow.load_type, 'Full'), \n        '',\n        concat(\n            'where ',activity('Read Table Details').output.firstRow.watermark_column ,'>', '''', variables('watermark_value'), ''''\n        ))\n}\n\n",
+									"value": "@concat('SELECT * FROM PUBLIC.\"', activity('Read Table Details').output.firstRow.source_table_name, '\"', if(equals(activity('Read Table Details').output.firstRow.load_type, 'FULL'), '', concat(' WHERE \"', activity('Read Table Details').output.firstRow.watermark_column, '\" > ''', variables('watermark_value'), '''')))\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00"
@@ -330,7 +330,7 @@
 										"source": {
 											"type": "AzureSqlSource",
 											"sqlReaderQuery": {
-												"value": "@concat('select watermark_value from ctrl.watermark where table_id = ''', pipeline().parameters.table_id, '''')",
+												"value": "@concat('select watermark_value from ctrl.watermark where table_id = ''', pipeline().parameters.table_id, '''')\n",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
@@ -340,7 +340,8 @@
 											"referenceName": "AzureSqlTable1",
 											"type": "DatasetReference",
 											"parameters": {}
-										}
+										},
+										"firstRowOnly": true
 									}
 								},
 								{
@@ -362,7 +363,7 @@
 									"typeProperties": {
 										"variableName": "watermark_value",
 										"value": {
-											"value": "@activity('Read Watermark').output.firstRow.watermark_value",
+											"value": "@activity('Read watermark').output.firstRow.watermark_value\n",
 											"type": "Expression"
 										}
 									}
@@ -619,7 +620,7 @@
 					},
 					"adf_run_id": {
 						"type": "string",
-						"defaultValue": "a4"
+						"defaultValue": "a5"
 					}
 				},
 				"variables": {
