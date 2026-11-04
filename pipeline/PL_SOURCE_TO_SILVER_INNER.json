@@ -408,7 +408,7 @@
 												"type": "AzureBlobFSReadSettings",
 												"recursive": false,
 												"modifiedDatetimeStart": {
-													"value": "@variables('watermark_value')",
+													"value": "@formatDateTime(variables('watermark_value'), 'yyyy-MM-ddTHH:mm:ssZ')\n",
 													"type": "Expression"
 												},
 												"deleteFilesAfterCompletion": false
